@@ -43,27 +43,41 @@ Secondly, input the necessary files that algorithm needs.
 
 =sif file format=
 type 1:
+
 YA p1 YB
+
 YA p1 YC
+
 …
 
 CA p2 CB 
+
 CB p2 CC
+
 …
 
 -YA pd -CB
+
 -YC pd -CC
 
 tip: if “Directed” checkbox is select, “YA p1 YB” is different from “YB p1 YA”, or else, they are the same edge.
 
 type 2 (including color weight):
+
 YA(0.1) p1 YB(0.2)
+
 YA(0.1) p1 YC(0.3)
+
 …
+
 CA(0.2) p2 CB(0.4)
+
 CB(0.4) p2 CC(0.1)
+
 …
+
 -YB(0.2) pd -CB(0.6)
+
 -YC(0.3) pd -CC(0.1)
 
 =format of algorithm files=
