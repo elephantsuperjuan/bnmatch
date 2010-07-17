@@ -1,9 +1,6 @@
-#summary One-sentence summary of this page.
-
 = Installation =
 
 Download BNMatch.jar and place it in the directory of plugin of Cytoscape 
 
 
 = Usage =
-
