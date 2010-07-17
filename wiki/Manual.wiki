@@ -3,6 +3,7 @@
 Download BNMatch.jar and place it in the directory of plugin of Cytoscape 
 
 
+
 = Usage =
 
 = External sif file =
@@ -37,6 +38,7 @@ Secondly, input the necessary files that algorithm needs.
 “Reset” button: Make the two network view to the initial state.
 
 “Refresh Immediately” radio: Make the refresh real-time. The nodes of “xxx_Target Networ x.sif” network will be changed as soon as you change the nodes in “xxx_Target Networ x.sif” network.
+
 
 
 = File Format =
