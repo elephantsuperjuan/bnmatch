@@ -6,7 +6,7 @@ Download BNMatch.jar and place it in the directory of plugin of Cytoscape
 = Usage =
 
 = External sif file =
-It means importing existing sif file from Cytoscape.
+It means importing existing sif file from Cytoscape.</ br>
 First of all, import sif file through “File->import->Network(Mutiple File Type)”.
 Then, press “Analyze” button to generate networks.
 
