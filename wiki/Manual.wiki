@@ -83,4 +83,4 @@ CB(0.4) p2 CC(0.1)
 -YC(0.3) pd -CC(0.1)
 
 =format of algorithm files=
-See Downloads
+See files in algorithmfiles.rar of "Downloads" page.
