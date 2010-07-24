@@ -33,7 +33,13 @@ Secondly, input the necessary files that algorithm needs.
 “Proteins assigned to match file” contains the nodes which are 100% matched.
 
 = Operations =
-“Refresh” button: when you move nodes or change nodes color or change nodes shape in “xxx_Large Networ x.sif” network view, “Refresh” makes the changes in “xxx_Target Networ x.sif” network view.
+“Analyze”button: It creates two initial network views according to the imported SIF file.
+
+“Color Weight” radio: You can use it as well as the imported SIF file contains digital followed each node. When it is enabled, the color of nodes is drawed according to the number,otherwise is painted by plugin itself.
+
+
+
+“Refresh” button: When you move nodes or change nodes color or change nodes shape in “xxx_Large Networ x.sif” network view, “Refresh” makes the changes in “xxx_Target Networ x.sif” network view.
 
 “Reset” button: Make the two network view to the initial state.
 
