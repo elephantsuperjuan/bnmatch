@@ -35,15 +35,15 @@ Secondly, input the necessary files that algorithm needs.
 = Operations =
 “Analyze”button: It creates two initial network views according to the imported SIF file.
 
-“Color Weight” radio: You can use it as well as the imported SIF file contains digital followed each node. When it is enabled, the color of nodes is drawed according to the number,otherwise is painted by plugin itself.
+“Color Weight” checkbox: You can use it as well as the imported SIF file contains digital followed each node. When it is enabled, the color of nodes is drawed according to the number,otherwise is painted by plugin itself.
 
-
+“Directed” checkbox: The default state of it is checked that means the plugin support directed network.Under this condition, an edge of "CA p1 CB" is different from an edge of "CB p1 CB".
 
 “Refresh” button: When you move nodes or change nodes color or change nodes shape in “xxx_Large Networ x.sif” network view, “Refresh” makes the changes in “xxx_Target Networ x.sif” network view.
 
 “Reset” button: Make the two network view to the initial state.
 
-“Refresh Immediately” radio: Make the refresh real-time. The nodes of “xxx_Target Networ x.sif” network will be changed as soon as you change the nodes in “xxx_Target Networ x.sif” network.
+“Refresh Immediately” checkbox: Make the refresh real-time. The nodes of “xxx_Target Networ x.sif” network will be changed as soon as you change the nodes in “xxx_Target Networ x.sif” network.
 
 
 
