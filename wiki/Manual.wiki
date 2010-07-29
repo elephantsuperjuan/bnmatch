@@ -32,6 +32,18 @@ Secondly, input the necessary files that algorithm needs.
 
 “Proteins assigned to match file” contains the nodes which are 100% matched.
 
+exampel: in TestFiels--algorithmfile1 folder
+
+“Proteins”:MIPS-PC-cc.txt
+
+“Interactions of one species”：fly.intr.txt
+
+“Interactions of another species”：yeast.intr.txt
+
+“Homologous file”：table.SC-DM.txt
+
+“Proteins assigned to match file”：match.txt
+
 = Operations =
 “Analyze”button: It creates two initial network views according to the imported SIF file.
 
@@ -44,7 +56,6 @@ Secondly, input the necessary files that algorithm needs.
 “Reset” button: Make the two network view to the initial state.
 
 “Refresh Immediately” checkbox: Make the refresh real-time. The nodes of “xxx_Target Networ x.sif” network will be changed as soon as you change the nodes in “xxx_Target Networ x.sif” network.
-
 
 
 = File Format =
