@@ -1,27 +1,14 @@
 package Cytoscape.plugin.BNMatch.INM;
-
-
-import java.util.Random;
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author YULEI
  */
+
+import java.util.Random;
+
 public class Util 
 {
 
-/**
- * 
- * @param Srand 输入的二维数组地址，Srand[inLen][outLen]，该地址指向该数组第一个元素的地址
- * @param inLen 二维数组在第一维方向上的长度
- * @param outLen 二维数组在第二维方向上的长度
- * @return
- */
     static public boolean  generateSrand(char[][] Srand,int inLen,int outLen)
     {
         int nrew=0;

@@ -1,20 +1,13 @@
 package Cytoscape.plugin.BNMatch.INM;
-
-
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-import java.util.Iterator;
-
 /**
  *
  * @author YULEI
  */
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+
+import java.util.Iterator;
 public class INMEdgeList extends HashSet 
 {
     String fileName;
@@ -25,10 +18,7 @@ public class INMEdgeList extends HashSet
         RetrieveEdgeFromFile();
     }
 
-    /**
-     * 向列表中添加一条新边，若该边已经存在，则忽略
-     * @param edge
-     */
+
     public void AddNewEdge(INMEdge edge)
     {
         add(edge);
@@ -37,7 +27,7 @@ public class INMEdgeList extends HashSet
     
 
     /**
-     * 向列表中添加一条新边，若该边已经存在，则忽略
+     * add a new edge
      * @param source
      * @param destination
      * @param weight
@@ -67,7 +57,7 @@ public class INMEdgeList extends HashSet
         add(new INMEdge(source,destination,weight,edgeType));
      }     
     /**
-     * 测试某条边是否存在
+     * Test whether there is a certain edge
      * @param edge
      * @return
      */
@@ -76,20 +66,13 @@ public class INMEdgeList extends HashSet
         return contains(edge);
     }
  
-    /**
-     * 删除xNode相关的所有的边
-     * @param edge
-     */
+
     public void RemoveEdge(INMEdge edge)
     {
         remove(edge);
     }
     
-    /**
-     * 返回所有以 xVertex 作为顶点的边
-     * @param vertex
-     * @return
-     */
+
     public INMEdgeList GetEdgesNodeAsVertex(INMNode vertex)
     {
         INMEdgeList edgeList=new INMEdgeList("");
@@ -97,9 +80,7 @@ public class INMEdgeList extends HashSet
         return edgeList;
     }
 
-    /**
-     * 从文件中读取边的信息
-     */
+
     public void RetrieveEdgeFromFile()
     {
         FileStream fs=new FileStream(fileName);
@@ -130,10 +111,7 @@ public class INMEdgeList extends HashSet
     {
         
     }
-/**
- * 删除xNode相关的所有的边
- * @param node
- */  
+  
     public void RemoveEdge(INMNode node)
     {
         Iterator it=this.iterator();
@@ -148,11 +126,7 @@ public class INMEdgeList extends HashSet
         }
     }
 
-    /**
-     * 返回以xNode为顶点的边
-     * @param node
-     * @return
-     */
+
     public INMEdge GetFirstEdge(INMNode node)
     {
         Iterator it=this.iterator();

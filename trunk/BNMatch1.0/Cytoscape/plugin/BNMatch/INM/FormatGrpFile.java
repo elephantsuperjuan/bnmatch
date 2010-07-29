@@ -1,10 +1,5 @@
 package Cytoscape.plugin.BNMatch.INM;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author YULEI
@@ -39,10 +34,10 @@ public class FormatGrpFile
     }
  
     /**
-     * 解析顶点行
+     * parse peak line
      * @param NO
      * @param nodeName
-     * @return
+     * @return INMNode
      */
     public INMNode ParseNode(String strNode,String nodeName)
     {
@@ -51,7 +46,7 @@ public class FormatGrpFile
     }
 
     /**
-     * 解析边数据行
+     * parse edge of data line
      * @param strEdge
      * @param edgeType
      * @return
@@ -66,7 +61,7 @@ public class FormatGrpFile
     }
     
  /**
-  * 输出格式化数据文件
+  * ouput format data to file
   */  
     public void OutTxtFile()
     {

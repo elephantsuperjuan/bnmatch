@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Cytoscape.plugin.BNMatch;
 /**
  *
@@ -126,27 +122,22 @@ public class BNMatchNetworks
          while(matchALNIt.hasNext())
          {
              it=(Integer)matchALNIt.next();
-             node=Cytoscape.getCyNode(nw.getNode(it.intValue()).getIdentifier().substring(1),true);//get node according to its identifier           
-//              matchNodes.add(new Integer(node.getRootGraphIndex()));//the index of node of matched target network
+             node=Cytoscape.getCyNode(nw.getNode(it.intValue()).getIdentifier().substring(1),true);//get node according to its identifier
               matchNodes.add(node);
               if(!targetALNodes.contains(node.getRootGraphIndex()))//matched node,but not a node of network
               {
                   nw.addNode(node);
                   targetALNodes.add(node.getRootGraphIndex());//add to network
               }
-              ///             targetALNodes.add(new Integer(node.getRootGraphIndex()));
-              
-             
+                         
              it=(Integer) matchALNIt.next();
              node=Cytoscape.getCyNode(nw.getNode(it.intValue()).getIdentifier().substring(1),true);//get node according to its identifier
-//             matchNodes.add(new Integer(node.getRootGraphIndex()));//the index of node of matched large network
              matchNodes.add(node);
              if(!largeALNodes.contains(node.getRootGraphIndex()))
              {
                  nw.addNode(node);
                  largeALNodes.add(node.getRootGraphIndex());
              }
-             ///            largeALNodes.add(new Integer(node.getRootGraphIndex()));
          }         
        
          gps[0].setgpNodes(largeALNodes);

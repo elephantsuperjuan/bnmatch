@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package Cytoscape.plugin.BNMatch;
 /**
  *
@@ -17,10 +12,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-/**
- *
- * @author YULEI
- */
+
 public class BNMatchDataStructure 
 {
    static ArrayList<CyNode> matchNodes;
@@ -144,11 +136,7 @@ public class BNMatchDataStructure
              matchEdgesAL.add(tnmeMap.get(str));
              matchEdgesAL.add(lnmeMap.get(str));
          } 
-/*         for(int i=0;i<matchEdgesAL.size();i++)
-         {
-             System.err.println(matchEdgesAL.get(i).getIdentifier());
-             
-         }*/
+
          return matchEdgesAL;
       }
 }

@@ -1,13 +1,11 @@
 package Cytoscape.plugin.BNMatch.INM;
-
-
+/**
+ *
+ * @author YULEI
+ */
 import Cytoscape.plugin.BNMatch.MainPanel;
 import java.io.BufferedReader;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,10 +13,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author YULEI
- */
+
 public class FileStream 
 {
 
@@ -29,9 +24,7 @@ public class FileStream
     GrpDataType dataType;
     BufferedReader in=null;
 
-/**
- * 四个构造器对应C++中一个有缺省值的构造函数
- */
+
     FileStream()
     {
         this.fileName="";
@@ -64,10 +57,11 @@ public class FileStream
         this.dataType=GrpDataType.NODE;        
     }
 /**
- * 打开文件。若打开失败，返回 false， 否则返回 true
+ * 
+ * open file
  * @param fileName
- * @return
- */    
+ * @return true or  false
+ */   
     public boolean Open(String fileName)
     {
         if(fileName.isEmpty())
@@ -117,10 +111,10 @@ public class FileStream
         try
           {
             String s = getBufferedReader().readLine().toUpperCase();
-            if(s==null)//到文件结尾
+            if(s==null)//end of file
                 return false;
             
-            String[] textLine = s.split("\\s");//空格分开
+            String[] textLine = s.split("\\s");
             String a = null;
             double probability = 0.0f;
 
@@ -128,7 +122,7 @@ public class FileStream
             probability = 1.0;
             INMNode node = new INMNode(a, probability);
             proteinSet.add(node);
-            for (int i = 1; i < textLine.length; i = i + 2)//读入一行数据
+            for (int i = 1; i < textLine.length; i = i + 2)//read a line
               {
                 a = textLine[i];
                 probability = Double.valueOf(textLine[i + 1]);
@@ -149,11 +143,11 @@ public class FileStream
 
     
 /**
- * 
+ * read data from sif file
  * @param firstNode
  * @param secondNode
  * @param probability
- * @return
+ * @return INMEdge
  */
     public INMEdge ReadNextInterrelationObject()
     {

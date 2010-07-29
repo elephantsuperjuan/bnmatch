@@ -1,14 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package Cytoscape.plugin.BNMatch;
 
-/**
- *
- * @author YULEI
- */
 /**
  * Classes that perform long tasks (like graph algorithms) can implement this interface
  * so that they can be monitored by a GUI like a <code>javax.swing.plaf.ProgressBarUI</code> or a

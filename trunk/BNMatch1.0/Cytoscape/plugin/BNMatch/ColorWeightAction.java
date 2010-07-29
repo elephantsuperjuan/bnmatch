@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package Cytoscape.plugin.BNMatch;
 /**
  *
@@ -19,10 +14,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author YULEI
- */
+
 class ColorWeightAction implements ActionListener
 {
     boolean isRefreshOnce=true;
