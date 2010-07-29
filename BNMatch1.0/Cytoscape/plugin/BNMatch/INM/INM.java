@@ -1,6 +1,8 @@
 package Cytoscape.plugin.BNMatch.INM;
-
-
+/**
+ *
+ * @author YULEI
+ */
 import Cytoscape.plugin.BNMatch.MainPanel;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -8,16 +10,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 import java.util.Iterator;
 
-/**
- *
- * @author YULEI
- */
 public class INM 
 {    
     public static void runINM()
@@ -71,7 +65,7 @@ public class INM
       
       for(int randNo=0;randNo<randNum;randNo++)
       {
-          if(randNo>0)//参数为0则对果蝇原始图进行匹配
+          if(randNo>0)//If parameter is 0, match to the original map of fruit flies
           {
              // match.SetTransformSeed();
               match.FlyNetworkTransform();
@@ -94,7 +88,7 @@ public class INM
                 {
                     num++;
                     MainPanel.runInformation.append("Begin MatchAlgorithm.....\n");
-                    resultNum=match.ComputeSim(randNo, num);//计算同源系数矩阵
+                    resultNum=match.ComputeSim(randNo, num);//calculate homologous coefficient matrix
                     rn=1;
                     matchNodes=match.MatchAlgorithm(rn);
                     match.OutPut(matchNodes, randNo, num, rn);

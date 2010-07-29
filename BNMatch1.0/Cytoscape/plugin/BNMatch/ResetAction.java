@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package Cytoscape.plugin.BNMatch;
 /**
  *
@@ -17,10 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author e467941
- */
+
 public class ResetAction implements ActionListener 
 {
    ResetAction()
@@ -45,7 +37,6 @@ public class ResetAction implements ActionListener
 
         final DGraphView largeView;
         final DGraphView targetView;
-       // System.err.println(networkId);
         if (cyNetwork == null)
           {
             System.err.println("Can't get a network.");

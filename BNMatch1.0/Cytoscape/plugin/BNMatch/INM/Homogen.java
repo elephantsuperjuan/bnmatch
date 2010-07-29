@@ -1,25 +1,19 @@
 package Cytoscape.plugin.BNMatch.INM;
-
-
-import java.util.Collections;
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-import java.util.Iterator;
-
 /**
  *
- * @author e467941
+ * @author YuLei
  */
+import java.util.Collections;
+import java.util.Iterator;
+
+
 public class Homogen implements Cloneable
 {
     enum enumErrorCode{UNDEFINEDID,UNDEFINEDSCORE};
-    String yeastProteinName;// 酵母蛋白质名称
+    String yeastProteinName;// name of yeast protein
     int ID;
     int score;
-    INMNodeList homogenList;// 果蝇的同源蛋白质列表
+    INMNodeList homogenList;//list of fruit fly homologous protein
        
     Homogen(String yeastProteinName)
     {
@@ -98,7 +92,7 @@ public class Homogen implements Cloneable
     }
 
     /**
-     * 添加一个新的同源蛋白质，若已经存在，则保存概率大的对象
+     * add a new homologous proteins, if already exists, then the probability of large objects stored
      * @param proteinName
      * @param probability
      */
@@ -113,7 +107,7 @@ public class Homogen implements Cloneable
     }
 
     /**
-     * 移除名为 strProteinName 的所有同源果蝇蛋白质
+     * remove all known strProteinName homologous protein of fruit fly
      * @param proteinName
      * @param probability
      */
@@ -123,7 +117,7 @@ public class Homogen implements Cloneable
     }
 
     /**
-     * 获取所有同源果蝇蛋白质列表
+     * get all lists of homologous protein of fruit fly
      * @return
      */
     public INMNodeList GetHomogenFlyProteinList()
@@ -132,9 +126,9 @@ public class Homogen implements Cloneable
     }
  
 /**
- * 检查是否存在名为 strProteinName 的同源果蝇蛋白质,采用二分法搜索
+ * check for the homologous Drosophila protein called strProteinName, and use binary search
  * @param proteinName
- * @return
+ * @return boolean
  */    
     public boolean IsExistedHomogenFlyProtein(String proteinName)
     {
@@ -147,7 +141,7 @@ public class Homogen implements Cloneable
     }
 
 /**
- * 在调用前，确保果蝇的同源蛋白质序列是有序的
+ * Before the call, it is to ensure that the homologous Drosophila protein sequence is ordered
  */
     public void SortHomogenFlyProteinList()
     {

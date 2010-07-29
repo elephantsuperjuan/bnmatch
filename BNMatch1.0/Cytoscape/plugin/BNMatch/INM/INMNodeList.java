@@ -1,6 +1,8 @@
 package Cytoscape.plugin.BNMatch.INM;
-
-
+/**
+ *
+ * @author YULEI
+ */
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -8,24 +10,9 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author YULEI
- */
 public class INMNodeList extends LinkedList
 {
-  
-/**
- * 该算法采用顺序查找，代价比较高昂， 不建议采用
- * 若有必要，建议对该列表排序，采用二分查找，可能效率更高
- * @param proteinName
- * @return
- */    
+      
 public INMNode FindProteinByName(String proteinName)
 {
     INMNode tmp = new INMNode(proteinName);
@@ -42,7 +29,7 @@ public INMNode FindProteinByName(String proteinName)
 
 
 /**
- * 添加一个名为 protein 的蛋白质，若该蛋白质已经存在，则保存概率大的蛋白质对象
+ * Add a protein called protein.If the protein already exists, then save the larger probability protein.
  * @param objProtein
  */
 public void AddNewProtein(INMNode protein)
@@ -69,7 +56,7 @@ public void AddNewProtein(String proteinName,double probability)
     AddNewProtein(node);
 }
 /**
- * 移除所有名称与 protein 相同的蛋白质
+ * Remove all proteins 
  * @param protein
  */
 public  void RemoveProtein(INMNode protein)
@@ -85,9 +72,6 @@ public void RemoveProtein(String proteinName,double probability)
     this.RemoveProtein(node);
 }
 
-/**
- * 节点序列排序
- */
 public void SortNodeList()
 {
     Collections.sort(this,new Comparator<INMNode>()

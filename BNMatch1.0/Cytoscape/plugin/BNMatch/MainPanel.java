@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package Cytoscape.plugin.BNMatch;
 /**
  *
@@ -21,6 +16,7 @@ import java.awt.FlowLayout;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 
@@ -41,10 +37,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-/**
- *
- * @author YULEI
- */
+
 public class MainPanel extends JPanel 
 {
     BNMatchPlugin.MainPanelAction trigger;
@@ -73,10 +66,8 @@ public class MainPanel extends JPanel
     JPanel algorithmPanel=new JPanel();
     private JSplitPane splitPane;
     static public JTextArea runInformation;
-    /**
-     * @param trigger A reference to the action that triggered the initiation of this class
-     * @param vistyle Reference to the used visual style
-     */
+    static String str1,str2,str3,str4,str5;
+
     MainPanel(BNMatchPlugin.MainPanelAction trigger) 
     {
         this.trigger = trigger;
@@ -124,12 +115,7 @@ public class MainPanel extends JPanel
         refreshButton.setEnabled(false);
      }
 
-    
-        /**
-     * Creates a JPanel containing scope radio buttons
-     *
-     * @return panel containing the scope option buttons
-     */
+   
     private JPanel selectSIFSourcePanel() 
     {
         JPanel panel = new JPanel();
@@ -146,15 +132,10 @@ public class MainPanel extends JPanel
         
         panel.add(extenalSIFFile);
         panel.add(byBNMatch);
-        //panel.setPreferredSize(new java.awt.Dimension(185, 164));
         panel.setToolTipText("Please select the source of sif file");
         return panel;
     }
-    /**
-     * Creates a JPanel containing scope radio buttons
-     *
-     * @return panel containing the scope option buttons
-     */
+
     private JPanel selectAlgorithmPanel() 
     {
         JPanel panel = new JPanel();
@@ -174,14 +155,19 @@ public class MainPanel extends JPanel
         return panel;
     }
 
-    /**
-     * Creates a JPanel containing files select buttons
-     *
-     * @return filespanel containing the files select buttons
-     */
    private JPanel setParametersPanel() 
    {
-        JPanel filesPanel = new JPanel();     
+        JPanel filesPanel = new JPanel();
+        File directory = new File(""); 
+        JFileChooser chooser=null;
+        try
+        {
+        chooser = new JFileChooser(directory.getCanonicalPath());
+        }catch(Exception e)
+        {
+            
+        }
+        
         filesPanel.setLayout(new BoxLayout(filesPanel, BoxLayout.Y_AXIS));
         filesPanel.setBorder(BorderFactory.createTitledBorder("Set Parameters"));
         JLabel jLabel1=new JLabel("Proteins:");
@@ -229,11 +215,11 @@ public class MainPanel extends JPanel
         openFileButton5.setAlignmentX(Component.LEFT_ALIGNMENT);
         weightPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         
-        openFileButton1.addActionListener(new FilesAction());
-        openFileButton2.addActionListener(new FilesAction());
-        openFileButton3.addActionListener(new FilesAction());
-        openFileButton4.addActionListener(new FilesAction());
-        openFileButton5.addActionListener(new FilesAction());
+        openFileButton1.addActionListener(new FilesAction(chooser));
+        openFileButton2.addActionListener(new FilesAction(chooser));
+        openFileButton3.addActionListener(new FilesAction(chooser));
+        openFileButton4.addActionListener(new FilesAction(chooser));
+        openFileButton5.addActionListener(new FilesAction(chooser));
 
         filesPanel.add(jLabel1);
         filesPanel.add(dirFileName1);
@@ -261,11 +247,7 @@ public class MainPanel extends JPanel
         return filesPanel;
     } 
 
-    /**
-     * Utility method that creates a panel for buttons at the bottom of the <code>MainPanel</code>
-     *
-     * @return a flow layout panel containing operation buttons
-     */
+
    private JPanel operationPanel() 
    {
         JPanel operationPanel=new JPanel();
@@ -344,42 +326,53 @@ public class MainPanel extends JPanel
     
     private class FilesAction implements ActionListener
     {
-        private String str="";
+
+        JFileChooser chooser;
+        
+        FilesAction(JFileChooser chooser)
+        {
+          this.chooser=chooser;
+        }
+        
         public void actionPerformed(ActionEvent e) 
         {
-    JFileChooser chooser = new JFileChooser();
     int returnVal = chooser.showOpenDialog(MainPanel.this);
     if(returnVal == JFileChooser.APPROVE_OPTION) 
     {
         if("1" ==e.getActionCommand())
       {
-       str=chooser.getCurrentDirectory().toString()+"\\"+chooser.getSelectedFile().getName(); 
-       Config.setMipsFileName(str);
-       dirFileName1.setText(str);
+       str1=chooser.getCurrentDirectory().toString()+"\\"+chooser.getSelectedFile().getName();
+
+       Config.setMipsFileName(str1);
+       dirFileName1.setText(str1);
       }
         if("2"==e.getActionCommand())
       {
-       str=chooser.getCurrentDirectory().toString()+"\\"+chooser.getSelectedFile().getName();
-       Config.setTargetFileName(str); 
-       dirFileName2.setText(str);
+       str2=chooser.getCurrentDirectory().toString()+"\\"+chooser.getSelectedFile().getName();
+
+       Config.setTargetFileName(str2); 
+       dirFileName2.setText(str2);
       }
         if("3"==e.getActionCommand())
       {
-       str=chooser.getCurrentDirectory().toString()+"\\"+chooser.getSelectedFile().getName();
-       Config.setLargeFileName(str);
-       dirFileName3.setText(str);
+       str3=chooser.getCurrentDirectory().toString()+"\\"+chooser.getSelectedFile().getName();
+
+       Config.setLargeFileName(str3);
+       dirFileName3.setText(str3);
       }
         if("4"==e.getActionCommand())
       {
-       str=chooser.getCurrentDirectory().toString()+"\\"+chooser.getSelectedFile().getName();
-       Config.setTableFileName(str);
-       dirFileName4.setText(str);
+       str4=chooser.getCurrentDirectory().toString()+"\\"+chooser.getSelectedFile().getName();
+
+       Config.setTableFileName(str4);
+       dirFileName4.setText(str4);
       }
         if("5"==e.getActionCommand())
       {
-       str=chooser.getCurrentDirectory().toString()+"\\"+chooser.getSelectedFile().getName();
-       Config.setMatchFileName(str);
-       dirFileName5.setText(str);
+       str5=chooser.getCurrentDirectory().toString()+"\\"+chooser.getSelectedFile().getName();
+
+       Config.setMatchFileName(str5);
+       dirFileName5.setText(str5);
       }
     }
     if(returnVal == JFileChooser.CANCEL_OPTION)

@@ -1,10 +1,4 @@
 package Cytoscape.plugin.BNMatch.INM;
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author YULEI
@@ -18,10 +12,7 @@ public class INMNode implements Cloneable
     protected int index;
     public enum enumProteinProperty {NAME,PROBABILITY}
 
-/**
- * java里没有默认值参数的方法
- * @param proteinName
- */
+
     INMNode(String proteinName)
     {
         double probability=0.0d;

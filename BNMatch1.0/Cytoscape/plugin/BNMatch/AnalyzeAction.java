@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Cytoscape.plugin.BNMatch;
 /**
  *
@@ -31,10 +27,6 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
-/**
- *
- * @author e467941
- */
 public class AnalyzeAction implements ActionListener
 {
     static ArrayList<CyNode> matchNodes;
@@ -65,7 +57,6 @@ public class AnalyzeAction implements ActionListener
         {
          cyNetwork = Cytoscape.getCurrentNetwork();
         networkIdentifier = cyNetwork.getIdentifier();        
-//        JOptionPane.showMessageDialog(Cytoscape.getDesktop(), str);
         if (cyNetwork == null)
           {
             System.err.println("Can't get a network.");
@@ -83,14 +74,21 @@ public class AnalyzeAction implements ActionListener
             JOptionPane.showMessageDialog(Cytoscape.getDesktop(), "Please select the correct network!");
             return;
         }
- 
-
-
-
         }
          else
         {
+            if(MainPanel.str1==null||MainPanel.str2==null||
+                    MainPanel.str3==null||MainPanel.str4==null)
+            {
+              JOptionPane.showMessageDialog(Cytoscape.getDesktop(), "Please input the file!");
+              return;            
+            }
             
+            if(MainPanel.weightField.getText().isEmpty())
+            {
+                MainPanel.weightField.setText("0.1");
+            }
+         
             Config.setWeight(Double.parseDouble(MainPanel.weightField.getText()));
             INM.runINM();
             MainPanel.runInformation.append("Reading networks...\n");
@@ -109,8 +107,8 @@ public class AnalyzeAction implements ActionListener
          JTaskConfig config = new JTaskConfig();
          //config.displayCancelButton(true);
          config.displayStatus(true);
-            //Execute Task via TaskManager
-            //This automatically pops-open a JTask Dialog Box
+         //Execute Task via TaskManager
+        //This automatically pops-open a JTask Dialog Box
          TaskManager.executeTask(task, config);
          
          if(task.isCompletedSuccessfully==true)
@@ -149,9 +147,7 @@ public class AnalyzeAction implements ActionListener
         cytoPanel.setState(CytoPanelState.DOCK);
     }
     
-/**
- * 
- */
+
     public void applyVisualMappingBypass(CyNetwork ln,CyNetwork tn,ArrayList<CyNode> mnAL,ArrayList<CyNode> lnAL,
             ArrayList<CyNode> tnAL,ArrayList<CyEdge> meAL,ArrayList<CyEdge> leAL,ArrayList<CyEdge> teAL)
     {
@@ -196,7 +192,7 @@ public class AnalyzeAction implements ActionListener
     }
     
     /**
-     * Sets the fill color for the provided nodes.
+     * Sets the fill color for the provided edges.
      * WARNING: this overwrites the vizmapper settings!
      * @param network network where the edges should be changed.
      * @param edgesAL 
@@ -256,7 +252,6 @@ public class AnalyzeAction implements ActionListener
             final ArrayList arrMatchNodes = BNMNetworks.matchNodes;//match nodes
             
             matchNodes = arrMatchNodes;
-//            largeNetwork = Cytoscape.createNetwork(largeGP.getNodeIndicesArray(), largeGP.getEdgeIndicesArray(), str + "_Large Network "+matchNodesPanelNO+".sif", cyNetwork);
             BNMatchDataStructure BNMDS=new BNMatchDataStructure(arrMatchNodes);//just pass the match nodes to BNMatchDataStructure class
 
             targetAL = BNMatchDataStructure.createTargetNetworkMatchNodes();

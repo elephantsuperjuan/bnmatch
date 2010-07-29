@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package Cytoscape.plugin.BNMatch;
 /**
  *
@@ -39,10 +34,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
-/**
- *
- * @author YULEI
- */
 public class BNMatchMatchResultPanel extends JPanel
 {
     String resultTitle;
@@ -107,7 +98,6 @@ public class BNMatchMatchResultPanel extends JPanel
         
         nodesOrEdges.add(matchNodesRadio);
         nodesOrEdges.add(matchEdgesRadio);
-        //panel.setPreferredSize(new java.awt.Dimension(185, 164));
         nodesOrEdges.setToolTipText("Please select a search algorithm"); 
         
         JPanel options=new JPanel();
@@ -371,7 +361,7 @@ private class NodesOrEdgesPanelAction extends AbstractAction
             if (result == JOptionPane.YES_OPTION) 
             {
                 cytoPanel.remove(trigger);
-                ParameterSet.removeResultParams(trigger.getPanelTitle());
+  //              ParameterSet.removeResultParams(trigger.getPanelTitle());
             }
             if (cytoPanel.getCytoPanelComponentCount() == 0) 
             {
@@ -408,10 +398,9 @@ private class NodesOrEdgesPanelAction extends AbstractAction
         }
     }
     
-        /**
+   /**
      * Selects a cluster in the view that is selected by the user in the browser table
-     *
-     * @param gpCluster Cluster to be selected
+     * @param indices nodes to be selected
      */
     public void selectMatchNodes(int[] indices) 
     {           
@@ -422,8 +411,6 @@ private class NodesOrEdgesPanelAction extends AbstractAction
               if(targetNetworkView==null)
                targetNetworkView=Cytoscape.createNetworkView(targetNetwork);
                 
-               // System.err.println(largeNetwork);
-               // System.err.println(largeNetworkView);
                 GinyUtils.deselectAllNodes(largeNetworkView);
                 GinyUtils.deselectAllNodes(targetNetworkView);
                 

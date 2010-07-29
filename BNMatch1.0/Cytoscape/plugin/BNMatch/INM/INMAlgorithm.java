@@ -1,11 +1,8 @@
 package Cytoscape.plugin.BNMatch.INM;
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * @author YULEI
  */
-
-
 import Cytoscape.plugin.BNMatch.MainPanel;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,33 +15,28 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author YULEI
- */
+
 public class INMAlgorithm 
 {
-//   static Config cfg;//配置文件
-   static INMEdgeList flyNetwork=new INMEdgeList("");// 保存果蝇蛋白质的所有边
-   char[][] flyMatrix; //果蝇网络矩阵,进行果蝇网络变换
+   static INMEdgeList flyNetwork=new INMEdgeList("");//save all the edges of drosophila protein
+   char[][] flyMatrix; //drosophila network matrix, for the fruit fly network transformation
    INMNodeList flyNodes;
-   ArrayList<INMNode> originalSubnet=new ArrayList<INMNode>();// 酵母的子网   
-   INMEdgeList edgesOfSubnet;// 保存酵母子网中所有的边
-   INMEdgeList KNDs;//保存强制匹配的蛋白质对 
+   ArrayList<INMNode> originalSubnet=new ArrayList<INMNode>();//yeast subnet   
+   INMEdgeList edgesOfSubnet;//Save all of the edges of yeast subnet
+   INMEdgeList KNDs;//Save compulsory matching proteins 
    
-   ArrayList<Integer> subPosition=new ArrayList<Integer>();// 记录等价节点本次遍历所处位置
+   ArrayList<Integer> subPosition=new ArrayList<Integer>();//record the equivalent node location of this traverse
    HomogenMap homogenMap;
-   HomogenMap fHomogenMapOfSim;//经过迭代计算的相似度矩阵
-   HomogenMap sHomogenMapOfSim;//经过迭代计算的相似度矩阵，收敛条件s(k)-s(k-2)，保留迭代后的最后两次结果
+   HomogenMap fHomogenMapOfSim;//similarity matrix
+   HomogenMap sHomogenMapOfSim;//similarity matrix
    
-   INMNodeList yeastConnSubnet;	// 酵母的连通子图
-   INMNodeList flySubnet=new INMNodeList();	// 扩展的果蝇子图
-   INMEdgeList edgesOfYeastConnSubnet;	// 酵母的连通子图的边
-   INMEdgeList edgesOfFlySubnet=new INMEdgeList("");	// 扩展的果蝇子图的边
+   INMNodeList yeastConnSubnet;	//yeast connected subnet
+   INMNodeList flySubnet=new INMNodeList();	//extended drosophila subnet
+   INMEdgeList edgesOfYeastConnSubnet;	// edges of yeast connected subnet
+   INMEdgeList edgesOfFlySubnet=new INMEdgeList("");	// edges of extended drosophila subnet
    String code,
            MIPSFileName,
            SC_DMFileName,
@@ -102,8 +94,9 @@ public class INMAlgorithm
     return true;
 }
    /**
-    * 从子网文件中读取指定子网
-    * @return
+    * read a subnet from a net file
+    * @param code
+    * @return boolean
     */
     public boolean ReadASubnet(String code)
     {
@@ -112,14 +105,14 @@ public class INMAlgorithm
         String[] temp=null;
         int pos=0,begin=0;
         prefix=code;
-        prefix=prefix+".";//避免出现类似 550.1.110 和 550.1.1 的前缀出现奇异，将子网的前缀用"."结束
+        prefix=prefix+".";
         
         if(fs.Open(MIPSFileName))
         {
             try
               {
                 String s = fs.in.readLine().toUpperCase();
-                if(s!=null)//第一行
+                if(s!=null)//first line
                 {
                     temp=s.split("\\s");
                     layer=a=temp[0];
@@ -129,12 +122,12 @@ public class INMAlgorithm
                     pos=a.indexOf(prefix);
                     if(pos==begin)
                     {
-                        INMNode node=new INMNode(b);//设置蛋白质所属的复合体代码
+                        INMNode node=new INMNode(b);//set complex code of protein
                         node.setLayerCode(layer);
                         INMNode n=new INMNode("");
                         n=(INMNode)node.clone();
                         originalSubnet.add(n);
-                        subPosition.add(new Integer(-1));// 首节点设为 -1。第一次排列组合时，可直接对首节点增一，使其指向第一个等价节点
+                        subPosition.add(new Integer(-1));//the first node is set to -1
                     }
                 }
                 s=fs.in.readLine().toUpperCase();
@@ -148,7 +141,7 @@ public class INMAlgorithm
                     pos=a.indexOf(prefix);
                     if(pos==begin)
                     {
-                        INMNode node=new INMNode(b);//设置蛋白质所属的复合体代码
+                        INMNode node=new INMNode(b);//set complex code of protein
                         node.setLayerCode(layer);
                         INMNode n=new INMNode("");
                         n=(INMNode)node.clone();
@@ -158,7 +151,7 @@ public class INMAlgorithm
                    s=fs.in.readLine().toUpperCase(); 
                 }
                 
-                if(subPosition.size()>0)// 增加一个节点，作为是否组合完全的标志位
+                if(subPosition.size()>0)
                     subPosition.set(0, new Integer(-1));
                 subPosition.add(new Integer(0));
                 return true;
@@ -172,13 +165,13 @@ public class INMAlgorithm
     }
   
     /**
-     *  获取酵母子网中所有的边
+     *  get all edges of yeast subnet
      */
     public void RetrieveSubnetEdge()
     {
         INMEdgeList edgeList=new INMEdgeList(yeastFileName);//?
         
-        // 两两组合酵母蛋白质，在文件中查找该边是否存在
+        
         int count=originalSubnet.size();
         for(int i=0;i<count-1;i++)
              for(int j=i+1;j<count;j++)
@@ -192,26 +185,26 @@ public class INMAlgorithm
 
     
  /**
-  * 进行匹配算法
+  * execute the matching algorithm
   * @param resultNum
   * @return
   */   
     public INMEdgeList MatchAlgorithm(int resultNum)
     {
-        INMEdgeList mateList=new INMEdgeList("");//用边结构来记录匹配的节点对 (节点1代表酵母 --- 节点2代表果蝇)
-        INMNodeList matchedNodeList=new INMNodeList();//记录已经匹配的酵母节点
+        INMEdgeList mateList=new INMEdgeList("");//edge structure to record the matching node(node 1 represents the yeast,node 2 represent the drosophila)
+        INMNodeList matchedNodeList=new INMNodeList();//record yeast nodes which are matched
         
         HomogenMap file=new HomogenMap("");
         HomogenMap homogenMapOfSim;
         if(resultNum==1)
-            homogenMapOfSim=fHomogenMapOfSim;//Similarity矩阵只收敛到一个值
+            homogenMapOfSim=fHomogenMapOfSim;//Similarity converges to a value only
         else
-            homogenMapOfSim=sHomogenMapOfSim;//Similarity矩阵收敛到最后两个值，对第二个收敛值进行匹配
+            homogenMapOfSim=sHomogenMapOfSim;//Similarity converges to the final two values,match the second convergence of the value
                
         if(homogenMapOfSim==null)
             return mateList;
         file=(HomogenMap)homogenMapOfSim.clone();
-        //时间控制
+        //time control
         long start=System.currentTimeMillis();
         long end=0;
         long duration=0;
@@ -236,7 +229,7 @@ public class INMAlgorithm
         INMNode u=new INMNode("");
         INMNode v=new INMNode("");
         INMNode tmpNode3=null;
-        double deltaSim=Config.getWeight();//加权权重
+        double deltaSim=Config.getWeight();
         
         Iterator it=yeastConnSubnet.iterator();
         Iterator tmpIt;
@@ -247,7 +240,7 @@ public class INMAlgorithm
             u=(INMNode)tmpNode3.clone();
             tmp=file.GetHomogenFlyProteinList(u.getProteinName());
             
-            if(tmp.isEmpty())continue;//酵母蛋白质没有同源蛋白质
+            if(tmp.isEmpty())continue;//no yeast homologous protein
            v=(INMNode)((INMNode)tmp.getFirst()).clone();
             tmpIt=tmp.iterator();
             while(tmpIt.hasNext())
@@ -271,10 +264,10 @@ public class INMAlgorithm
         
         while(!PQ.isEmpty())
         {
-            /*时间超过5小时，返回结果省略*/           
+          
             end=System.currentTimeMillis();
             duration=start-end;
-            if(duration>18000000) return mateList;//时间超过5小时，返回结果
+            if(duration>18000000) return mateList;//More than 5 hours,return 
             
             u=(INMNode)PQ.getFirst();
             PQ.removeFirst(); 
@@ -387,24 +380,17 @@ public class INMAlgorithm
         return mateList;
     }
    
-   /**
-     * 返回层中连通的酵母子网
-     * @return
-     */
+
     public INMEdgeList GetYeastSubnet()
     {
         return edgesOfYeastConnSubnet;
     }
 
-    /**
-     * 酵母子网是否连通
-     * @param strCode
-     * @return
-     */
+
     public int FindYeastConnectivitySubnet(String strCode)
     {
-        int subnetNum=0;//包含低一级层的子网个数
-        Queue<INMNode> VQ=new LinkedList<INMNode>();//队列
+        int subnetNum=0;
+        Queue<INMNode> VQ=new LinkedList<INMNode>();
        INMNode u1,u2,v;
        String code=null,code1=null,code2=null,prefix=null;
        prefix=strCode;
@@ -435,7 +421,7 @@ public class INMAlgorithm
                 code=code2=code2.concat(".");
                 int pos2=code.indexOf(prefix);
                 
-                if(pos1!=0 || pos2!=0) continue;//顶点不属于该层
+                if(pos1!=0 || pos2!=0) continue;//Vertex does not belong to this layer
                 
                 if(u1.equals(v))
                 {
@@ -465,7 +451,7 @@ public class INMAlgorithm
                 code1=prefix;
                 if(pos!=-1)
                 {
-                    code1+=code.substring(0, pos);//存在低一级层
+                    code1+=code.substring(0, pos);//There is a low-level layer
                 }
                 
                 code=code2=code2.concat(".");
@@ -474,15 +460,15 @@ public class INMAlgorithm
                 code2=prefix;
                 if(pos!=-1)
                 {
-                    code2+=code.substring(0, pos);//存在低一级层
+                    code2+=code.substring(0, pos);//There is a low-level layer
                 }
                 if(!code1.equals(code2))
                 {
-                    subnetNum=2;//连通图中的顶点在不同的低一级层中
+                    subnetNum=2;//Vertices of connected graph is in different low-level layers 
                 }
                 else if(!prefix.equals(code1) && subnetNum!=2)
                 {
-                    subnetNum=-1;//连通图中的顶点在同一低一级层中
+                    subnetNum=-1;//Vertices of connected graph is in the same low-level layers
                 }
             }            
         }
@@ -492,7 +478,7 @@ public class INMAlgorithm
         while(it.hasNext())
         {
             node=(INMNode)it.next();
-            int index=originalSubnet.indexOf(node);//对应c++中find,在list中能不能找到某个元素第一次出现的位置，找不到返回最后个位置
+            int index=originalSubnet.indexOf(node);
             if(index!=-1)
             originalSubnet.remove(index);
         }
@@ -515,7 +501,7 @@ public class INMAlgorithm
     }
 
 /**
- * 计算相似度矩阵S
+ * compute the similarity matrix S
  * @param randNo
  * @param yeastSubnnetNo
  * @return
@@ -523,7 +509,7 @@ public class INMAlgorithm
     public int ComputeSim(int randNo,int yeastSubnnetNo)
     {
         if(yeastConnSubnet.size()==0)return 1;
-        /*时间控制省略*/
+
         
         FindFlySubnet();
         if(flySubnet.size()==0) return 1;
@@ -531,7 +517,7 @@ public class INMAlgorithm
         n1=yeastConnSubnet.size();
         n2=flySubnet.size();
         
-        //数组中初值都为0
+
         double[][] Sk0=new double[n1][n2];
         double[][] Sk1=new double[n1][n2];
         double[][] Sk2=new double[n1][n2];
@@ -545,8 +531,8 @@ public class INMAlgorithm
         double[][] vr=new double[n1][n1];
         double[][] work=new double[3*n1][3*n1];
         
-        INMNodeList[] adjYeast=new INMNodeList[n1];//酵母的邻接矩阵
-        INMNodeList[] adjFly=new INMNodeList[n2];//果蝇的邻接矩阵
+        INMNodeList[] adjYeast=new INMNodeList[n1];//Adjacency matrix of yeast
+        INMNodeList[] adjFly=new INMNodeList[n2];//Adjacency matrix of Drosophila
         
         int index=0;
         int degree=0;
@@ -558,7 +544,7 @@ public class INMAlgorithm
         INMNode node=null;
 
         INMEdge edge=null;
-        //得到酵母连通子网的数组和顶点的度
+        //get arrays and vertex degree in connected subnet of yeast 
         while(it.hasNext())
         {
             node=(INMNode)it.next();
@@ -594,7 +580,7 @@ public class INMAlgorithm
         index=0;
 
         it=flySubnet.iterator();
-        //得到果蝇子网数组和顶点的度
+        //get arrays and vertex degree in connected subnet of drosophila
         while(it.hasNext())
         {
             node=(INMNode)it.next();
@@ -638,7 +624,7 @@ public class INMAlgorithm
         while(it.hasNext())
         {
             node=(INMNode)it.next();
-            tmp=homogenMap.GetHomogenFlyProteinList(node.getProteinName());//SC_DM文件所得到的果蝇蛋白链表数组
+            tmp=homogenMap.GetHomogenFlyProteinList(node.getProteinName());
             if(tmp.isEmpty())continue;
             Iterator iterator=tmp.iterator();
             while(iterator.hasNext())
@@ -653,7 +639,6 @@ public class INMAlgorithm
         }
         aveSim = sumSim/(n1*n2);
         
-        //////省略输出dat文件//////
         
         int iIndex,jIndex,uIndex,vIndex;
         int iDegree,jDegree;
@@ -672,7 +657,6 @@ public class INMAlgorithm
         int times=0;
         do
         {
-            /*省略时间*/
             if(times>1000) break;
             
             Iterator iIt=yeastConnSubnet.iterator();
@@ -812,7 +796,6 @@ public class INMAlgorithm
                     maxw = wr[i];
                   }
 
-            ////采用最大值进行归一化
             for (int i = 0; i < n1; i++)
                 for (int j = 0; j < n2; j++)
                   {
@@ -862,9 +845,9 @@ public class INMAlgorithm
         
         
         
-        int resultNum=1;//返回收敛的结果数
+        int resultNum=1;
         
-        ReadKN_D();	//指定强制匹配点
+        ReadKN_D();	//designate mandatory matching points
         it=KNDs.iterator();
         while(it.hasNext())
         {
@@ -891,32 +874,32 @@ public class INMAlgorithm
     }
  
 /**
- * 产生用来和酵母进行匹配的果蝇子图
+ * generate subgraph to match the fruit fly and yeast
  */
     public void FindFlySubnet()
     {
-        if(yeastConnSubnet.size()==0) return;	//酵母连通子网为空，则返回
+        if(yeastConnSubnet.size()==0) return;	//yeast connected subnet is empty
         flySubnet.clear();
         edgesOfFlySubnet.clear();
-        //得到酵母所有的同源果蝇顶点
+        
         INMNodeList tmp, tmpFlySubnet;
         Iterator it=yeastConnSubnet.iterator();
         INMNode node;
         while(it.hasNext())
         {
             node=(INMNode)it.next();
-            tmp=homogenMap.GetHomogenFlyProteinList(node.getProteinName());//SC_DM文件所得到的果蝇蛋白链表数组
+            tmp=homogenMap.GetHomogenFlyProteinList(node.getProteinName());
             if(tmp.isEmpty()) continue;
             
             Iterator iter=tmp.iterator();
             while(iter.hasNext())
             {
                 INMNode n=(INMNode)iter.next();
-                flySubnet.AddNewProtein(n);//生成果蝇子网
+                flySubnet.AddNewProtein(n);
             }
         }
 //           tmp=homogenMap.GetHomogenFlyProteinList("A");
-        //得到同源果蝇顶点的连接子网
+       
         tmpFlySubnet=flySubnet;
         it=flyNetwork.iterator();
         while(it.hasNext())
@@ -949,7 +932,7 @@ public class INMAlgorithm
     }
     
  /**
-  * 由similarity矩阵生成HomogenMap类即相似度矩阵W
+  * generate HomogenMap
   * @param s
   * @param resultNum
   */
@@ -983,8 +966,8 @@ public class INMAlgorithm
     }
     
 /**
- * 果蝇网络链表结构变换为矩阵形式
- * @return
+ * transformation list structure of drosophila network into matrix 
+ * @return int
  */    
     public int FlyNetToMatrix()
     {
@@ -1023,7 +1006,7 @@ public class INMAlgorithm
     }
     
  /**
-  * 果蝇网络变换矩阵转换为链表结构
+  * transformation matrix of drosophila network into list structure
   */   
     public void FlyMatrixToNet()
     {
@@ -1050,7 +1033,7 @@ public class INMAlgorithm
     }
     
 /**
- * 输出匹配结果到文件
+ * output matching results to a file
  * @param matchEdges
  * @param randNo
  * @param yeastSubnetNo
@@ -1105,7 +1088,7 @@ public class INMAlgorithm
             tmpYeastSubnetArray.add(edge);
           }
         it = edgesOfFlySubnet.iterator();
-        while (it.hasNext())//输出扩展图
+        while (it.hasNext())
           {
             edge = (INMEdge) it.next();
             edgesOfFlySubnetArray.add(edge);
@@ -1155,7 +1138,7 @@ public class INMAlgorithm
     
         try
           {
-            File dirFile=new File("output");//建立个output文件夹
+            File dirFile=new File("output");//build output folder 
              if(!dirFile.exists())
                 dirFile.mkdir();
             fileName=randNo+"-"+code+"-"+yeastSubnetNo+"."+resultNum+".sif"; 
@@ -1163,38 +1146,26 @@ public class INMAlgorithm
             fileAbsolutePath=dirFile.getAbsolutePath()+"\\"+fileName;
             
             File outputFile=new File(dirFileName);
-             //File exOutputFile=new File(fileName+".ex.sif");
              
              PrintWriter outputStream=new PrintWriter(new FileOutputStream(outputFile,false));
-             //PrintWriter exOutputStream=new PrintWriter(new FileOutputStream(exOutputFile,true));
-             
-             
-             
+                         
              for(INMEdge e:tmpFlySubnetArray)
              {
                  outputStream.println(e.GetFirstVertex().getProteinName()+" p2 "+e.GetSecondVertex().getProteinName());
              }
              
              
-//             for(INMEdge e:edgesOfFlySubnetArray)
-//             {
-//                 exOutputStream.println(e.GetFirstVertex().getProteinName()+" p2 "+e.GetSecondVertex().getProteinName());
-//             }
-             
             for(INMEdge e:tmpYeastSubnetArray)
              {
                  outputStream.println(e.GetFirstVertex().getProteinName()+" p1 "+e.GetSecondVertex().getProteinName());
-//                 exOutputStream.println(e.GetFirstVertex().getProteinName()+" p1 "+e.GetSecondVertex().getProteinName());
              }
              
             for(INMEdge e:matchEdgesArray)
              {
                  outputStream.println("-"+e.GetFirstVertex().getProteinName()+" pd -"+e.GetSecondVertex().getProteinName());
-//                 exOutputStream.println("-"+e.GetFirstVertex().getProteinName()+" pd -"+e.GetSecondVertex().getProteinName());                 
              }
              
              outputStream.close();
-//             exOutputStream.close();
           } catch (FileNotFoundException e)
           {
             MainPanel.runInformation.append("No such file!\n");
@@ -1205,7 +1176,7 @@ public class INMAlgorithm
     }
 
 /**
- * 进行果蝇网络的变换
+ * transform the network of drosophila
  */
     public void FlyNetworkTransform()
     {
@@ -1219,16 +1190,14 @@ public class INMAlgorithm
       FlyMatrixToNet();
     }
 
-/**
- * 设置随机变换种子，在变换前设置
- */
+
     public void SetTransformSeed()
     {
-        /////////////////时间种子，java默认的就是，所以不要再设置
+        
     }
 
 /**
- * 得到果蝇的蛋白质网络
+ * gey fly protein network
  * @return
  */
     public INMEdgeList GetFlyNetwork()
@@ -1237,7 +1206,7 @@ public class INMAlgorithm
     }
 
     /**
-     * 得到强制匹配蛋白质对
+     * get mandatory matching protein pairs
      */
     public void ReadKN_D()
     {

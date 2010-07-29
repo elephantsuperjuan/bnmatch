@@ -1,14 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package Cytoscape.plugin.BNMatch;
 
-/**
- *
- * @author YULEI
- */
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;

@@ -1,10 +1,5 @@
 package Cytoscape.plugin.BNMatch.INM;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author YULEI
@@ -60,7 +55,7 @@ public class INMEdge
          }
      }
 
-/*两条有向edge中只要对应点的名称相同就相等*/
+
     @Override
      public int hashCode()
      {
@@ -80,12 +75,7 @@ public class INMEdge
     {
         return source.getProteinName()+destination.getProteinName();
     }
-/**
- * add by yulei
- * @param strSource
- * @param strDestination
- * @param weight
- */
+
      INMEdge(String strSource,String strDestination,double weight)
      {
          source=new INMNode(strSource);
@@ -101,7 +91,7 @@ public class INMEdge
      }
     
 /**
- * 获取边的两个顶点
+ * get vertexs
  */
      public void GetVertexs(String vertex1,String vertex2)
      {
@@ -119,10 +109,7 @@ public class INMEdge
          return enumEType;
      }
   
-/**
- * 取第一个顶点，对于由向边，返回起点。对于无向边，返回较小的顶点
- * @return
- */
+
      public INMNode GetFirstVertex()
      {
          return source;

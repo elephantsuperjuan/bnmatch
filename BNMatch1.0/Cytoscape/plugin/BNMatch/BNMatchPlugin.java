@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package Cytoscape.plugin.BNMatch;
 
 /**
@@ -36,10 +31,8 @@ public class BNMatchPlugin extends CytoscapePlugin
 {
     public BNMatchPlugin()
     {
-         //set-up menu options in plugin menu
         JMenu menu=Cytoscape.getDesktop().getCyMenus().getOperationsMenu();
         JMenuItem item;
-        //BNMatch submenu
         JMenu submenu = new JMenu("BNMatch");
         submenu.setToolTipText("Plugin for clustering");
 
@@ -54,62 +47,31 @@ public class BNMatchPlugin extends CytoscapePlugin
         item.addActionListener(new StopAction());
         submenu.add(item);
         submenu.addSeparator();
-
-        //About box
+        
         item = new JMenuItem("About...");
         item.setToolTipText("About the plugin");
         item.addActionListener(new AboutAction());
         submenu.add(item);
        
-        //menu.add(submenu);
         menu.add(submenu);
     }
     
-    //Some interanal Classes
-    /**
-     * Action to display the main panel where some clustering parameters are to be modified
-     */
 public class MainPanelAction implements ActionListener
     {
         boolean opened = false;
         MainPanel mainPanel;
-        VisualMappingManager vmm;
 
-        public MainPanelAction() 
-        {
-            vmm = Cytoscape.getVisualMappingManager();
-        }
 
-        /**
-         * This method is called when the user wants to start the clustering process.
-         *
-         * @param event the event that the very Menu Item:"Start" Selected.
-         */
         public void actionPerformed(ActionEvent event) 
         {
-            //display MainPanel in left cytopanel
             CytoscapeDesktop desktop = Cytoscape.getDesktop();
-            CytoPanel cytoPanel = desktop.getCytoPanel(SwingConstants.WEST);//get the west cytopanel
+            CytoPanel cytoPanel = desktop.getCytoPanel(SwingConstants.WEST);
 
-            //First we check if the plugin has already been opened
+            //plugin hasn't been started
             if (!opened) 
             {
-                //if the visual style has not already been loaded, we load it
-                if (!vmm.getCalculatorCatalog().getVisualStyleNames().contains("BNMatch"))
-                {
-                }
-                //The style is not actually applied until a result is produced (in AnalyzeAction)
                 mainPanel = new MainPanel(this);
-                URL iconURL = BNMatchPlugin.class.getResource("resources/logo.gif");
-                if (iconURL != null) 
-                {
-                    ImageIcon icon = new ImageIcon(iconURL);
-                    String tip = "Identify Clusters. Select an algorithm, then set the parameters";
-                    cytoPanel.add("BNMatch", icon, mainPanel, tip);  //add the main panel together with a icon with text
-                } else 
-                {
-                    cytoPanel.add("BNMatch", mainPanel);
-                }
+                cytoPanel.add("BNMatch", mainPanel);
             }
             else 
             {
@@ -121,19 +83,10 @@ public class MainPanelAction implements ActionListener
             setOpened(true);
         }
 
-        /**
-         * Limit the number of open instances of the MainPanel to 1.
-         * If the plugin is being closed,
-         * then sets the visual style to the visual style last used.
-         */
+
         public void setOpened(boolean opened) 
         {
             this.opened = opened;
-            if (!isOpened() /*&& vmm.getVisualStyle() == vistyle*/) 
-            {
-                vmm.setVisualStyle("default");
-                vmm.applyAppearances();
-            }
         }
         public boolean isOpened() 
         {
@@ -184,7 +137,7 @@ private class StopAction implements ActionListener
                     this.matchResultPanel = (BNMatchMatchResultPanel) component;
                     componentTitle = this.matchResultPanel.getResultTitle();
                     cytoPanel.remove(component);
-                    ParameterSet.removeResultParams(componentTitle);
+//                    ParameterSet.removeResultParams(componentTitle);
                 }
             }
             //hide the result panel
@@ -200,37 +153,29 @@ private class StopAction implements ActionListener
 
 private class AboutAction implements ActionListener 
 {
-        /**
-         * Invoked when the about action occurs.
-         */
         public void actionPerformed(ActionEvent e)
         {
-            //display about box
             AboutDialog aboutDialog = new AboutDialog();
             aboutDialog.pack();//the dialog must be packed???
             aboutDialog.setVisible(true);
         }
     }
-    /**
-     * An about dialog box for this Cluster Plugin
-     */
+
 private class AboutDialog extends JDialog 
 {
-        static final long serialVersionUID=-945045L;
+        static final long serialVersionUID=-954321L;
         public AboutDialog() 
         {
             super(Cytoscape.getDesktop(), "About BNMatch Plugin", false);
             setResizable(false);
 
-
-            //main panel for dialog box
             JEditorPane editorPane = new JEditorPane();
             editorPane.setMargin(new Insets(10,10,10,10));
             editorPane.setEditable(false);
             editorPane.setEditorKit(new HTMLEditorKit());
             editorPane.addHyperlinkListener(new HyperlinkAction(editorPane));
 
-            URL logoURL = BNMatchPlugin.class.getResource("resources/logo2.png");
+            URL logoURL = BNMatchPlugin.class.getResource("resources/logo.gif");
             String logoCode = "";
             if (logoURL != null)
             {

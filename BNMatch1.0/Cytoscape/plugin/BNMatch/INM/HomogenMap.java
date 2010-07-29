@@ -1,9 +1,7 @@
 package Cytoscape.plugin.BNMatch.INM;
-
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * @author YuLei
  */
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,18 +9,15 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-/**
- *
- * @author e467941
- */
+
 public class HomogenMap implements Cloneable
 {
-    static char prefix=':';// 蛋白质的前缀分隔符
-    static char postfix='-';// 果蝇蛋白质后缀分隔符
-    static char yeast='Y';// 酵母蛋白质首字母
-    static char fly='C';// 果蝇蛋白质首字母
+    static char prefix=':';//protein prefix separator
+    static char postfix='-';//fruit fly protein suffix separator
+    static char yeast='Y';//the first letter of the yeast protein
+    static char fly='C';//the first letter of the fruit fly protein
     
-    LinkedList<Homogen> homogenMapList;// 同源蛋白质映射表 java中linkedlist==c++中list
+    LinkedList<Homogen> homogenMapList;//Homologous protein map
     
     String homogenFileName;
     
@@ -39,8 +34,8 @@ public class HomogenMap implements Cloneable
         HomogenMap o=null;
         try
         {
-            o=(HomogenMap)super.clone();//影子克隆
-            o.homogenMapList=new LinkedList<Homogen>();//将clone进行到底
+            o=(HomogenMap)super.clone();
+            o.homogenMapList=new LinkedList<Homogen>();
             Iterator it=homogenMapList.iterator();
             while(it.hasNext())
             {
@@ -55,7 +50,7 @@ public class HomogenMap implements Cloneable
     }    
 
 /**
- * 加入一列同源蛋白质列表，若该项在表中已经存在，则比较各同源蛋白质，并保存概率大的数值
+ * join a list of homologous proteins, if that already exists in the table, then the comparison of homologous proteins, and save the probability of large values
  * @param homogen
  */
     public void AddHomogenColumn(Homogen homogen)
@@ -65,13 +60,13 @@ public class HomogenMap implements Cloneable
         {
             public int compare(Homogen h1,Homogen h2)
             {
-                return h1.GetYeastProteinName().compareTo(h2.GetYeastProteinName());//?
+                return h1.GetYeastProteinName().compareTo(h2.GetYeastProteinName());//
             }
         });
         
-        if(pos>=0)//有相等的值
+        if(pos>=0)
         {
-            Iterator it=homogen.GetHomogenFlyProteinList().iterator();// 取 objHomogen 中果蝇蛋白质数据
+            Iterator it=homogen.GetHomogenFlyProteinList().iterator();
             INMNode node=null;
             while(it.hasNext())
             {
@@ -85,10 +80,7 @@ public class HomogenMap implements Cloneable
         
     }
 
-/**
- * 调用 XJFileStream，读取文件中所有的酵母同源蛋白质数据，并创建同源蛋白质结构
- * ReadSC_DMObject()只在这里被调用
- */
+
     public void RetrieveYeastHomogenTable()
     {
         FileStream file=new FileStream(homogenFileName,FileStream.BiologicalFileType.SC_DM);
@@ -98,7 +90,7 @@ public class HomogenMap implements Cloneable
             ArrayList<INMNode> rawProteinSet = new ArrayList<INMNode>();
             while (file.ReadNextSC_DMObject(id, score, rawProteinSet))
               {
-                ParseAddYeastHomogen(id, score, rawProteinSet);// 解析酵母数据，并将其加入到列表中
+                ParseAddYeastHomogen(id, score, rawProteinSet);//Analysis of yeast data, and added to the list
                 rawProteinSet.clear();
               }
           }
@@ -113,7 +105,6 @@ public class HomogenMap implements Cloneable
     }
     
 /**
- * 解析酵母数据，并将其加入到列表中。如果数据文件中数据不正确，该解析将抛出异常
  * @param id
  * @param score
  */ 
@@ -128,12 +119,12 @@ public class HomogenMap implements Cloneable
         INMNode node=null;
         String tmp=null;
         String strName=null;
-        while(it.hasNext())// 首先找出所有酵母蛋白质名称，并去除其中的前置符号（如 ORFP 等）以及果蝇蛋白质的后缀
+        while(it.hasNext())//First find out the name of all yeast proteins, and remove one of the pre-symbol (such as ORFP, etc.) and the suffix protein of fruit fly
         {
             node=(INMNode)it.next();
             strName=node.getProteinName();
             int pos=strName.indexOf(prefix);
-            if(pos!=-1)//找到了
+            if(pos!=-1)//find it
             {
                 tmp=strName.substring(pos+1);
                 strName=tmp;
@@ -151,7 +142,7 @@ public class HomogenMap implements Cloneable
              fFly.add(node.getProteinProbability());
             }
          }     
-    	    // 将同源数据加入到映射表中        
+    	    //add the source data to mapping table        
             for(int i=0;i<strYeast.size();i++)
             {
                 Homogen homo=new Homogen("");
@@ -173,7 +164,7 @@ public class HomogenMap implements Cloneable
         {
             hg=(Homogen)it.next();
             System.out.println("ID= "+hg.GetYeastProteinID()+"\tscore= "+hg.GetYeastProteinScore()
-                    +"\tname: "+hg.GetYeastProteinName());// 打印酵母蛋白质 ID、 Score 及名称
+                    +"\tname: "+hg.GetYeastProteinName());//Print yeast protein ID, Score and Name
             Iterator iter=hg.GetHomogenFlyProteinList().iterator();
             while(iter.hasNext())
             {
@@ -185,9 +176,7 @@ public class HomogenMap implements Cloneable
         }
         
     }
-/**
- * 输出Blast格式文件 省略
- */   
+   
     public void TableToBlast()
     {       
     }
@@ -203,11 +192,7 @@ public class HomogenMap implements Cloneable
         return null;
     }
 
-/**
- * 移除酵母 strYeastName 蛋白质的同源果蝇蛋白质 strFlyName
- * @param yeastName
- * @param flyName
- */
+
     public void RemoveHomogenFlyProtein(String yeastName,String flyName)
     {
         Homogen tmp=new Homogen(yeastName);
@@ -218,11 +203,7 @@ public class HomogenMap implements Cloneable
         }
     }
 
-/**
- * 
- * @param yeastName
- * @param flyProtein
- */
+
     public void AddHomogenFlyPotein(String yeastName,INMNode flyProtein)
     {
         Homogen tmp=new Homogen(yeastName);

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Cytoscape.plugin.BNMatch;
 /**
  *
@@ -22,8 +18,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A visual style for ClusterPlugin 
- * set the visual style of different node shape and color.
+ * 
+ * set the visual style of different nodes and edges.
  */
 public class BNMatchVizMapperUtils 
 {

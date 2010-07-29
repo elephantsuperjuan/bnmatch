@@ -1,24 +1,17 @@
 package Cytoscape.plugin.BNMatch.INM;
-
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Iterator;
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author YULEI
  */
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Iterator;
+
 public class INMScore 
 {
-    String matchedFix;// NBM算法的结果，匹配的蛋白质类型
-    String yeast;// 酵母蛋白质类型
-    String fly;// 果蝇蛋白质类型
+    String matchedFix;
+    String yeast;
+    String fly;
     INMEdgeList flyNetwork;
     String code;
     String MIPSFileName;
@@ -55,7 +48,7 @@ public class INMScore
     }
  
     /**
-     * 为匹配结果打分
+     * mark for the matching result
      * @param nodeScore
      * @param edgeScore
      * @return
@@ -69,7 +62,6 @@ public class INMScore
        nodeScore=0;
        edgeScore=0;
        
-       //////对同源顶点进行打分//////
        System.out.println("Matched Nodes:"+this.mateList.size()); 
        Iterator it=this.mateList.iterator();
        INMEdge edge=null;
@@ -89,7 +81,6 @@ public class INMScore
        }
        
        edgeScore=0;
-       //////对具有同源点的边进行打分//////
        scoreFile=scoreFile+".mark";
        INMEdge[] homoMateArray=(INMEdge[])homoMateList.toArray();
        int count=homoMateArray.length;
@@ -102,7 +93,6 @@ public class INMScore
                if(yeastNet.IsExistedEdge(yeastEdge)&&flyNet.IsExistedEdge(flyEdge))//这里有问题
                {
                    edgeScore++;
-                   //这里存文件省略
                    tmpMateList.AddNewEdge(homoMateArray[i]);
                    tmpMateList.AddNewEdge(homoMateArray[j]);
                }
@@ -115,7 +105,6 @@ public class INMScore
        {
            edge=(INMEdge)it.next();
            nodeScore+=edge.GetEdgeWeight();
-           //这里存文件省略
        }
        
        score=nodeScore+edgeScore;
@@ -123,7 +112,7 @@ public class INMScore
    }
 
    /**
-    * 读取NBM算法的匹配结果
+    * read nbm result
     * @param fileName
     * @return
     */
@@ -149,13 +138,13 @@ public class INMScore
                    firstNode=textLine[0];
                    edgeType=textLine[1];
                    secondNode=textLine[2];
-                   if(edgeType==matchedFix)//该行是匹配的蛋白质
+                   if(edgeType==matchedFix)
                    {
                        mateList.AddNewEdge(firstNode.substring(1), secondNode.substring(1),INMEdge.enumEdgeType.DIRECTION);
-                   }else if(edgeType==fly)// 该行是果蝇蛋白质的边
+                   }else if(edgeType==fly)
                    {
                       flyNet.AddNewEdge(firstNode, secondNode); 
-                   }else// 该行是酵母蛋白质的边
+                   }else// 
                    {
                        yeastNet.AddNewEdge(firstNode, secondNode);
                    }
