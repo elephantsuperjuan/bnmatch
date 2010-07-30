@@ -175,19 +175,11 @@ private class AboutDialog extends JDialog
             editorPane.setEditorKit(new HTMLEditorKit());
             editorPane.addHyperlinkListener(new HyperlinkAction(editorPane));
 
-            URL logoURL = BNMatchPlugin.class.getResource("resources/logo.gif");
-            String logoCode = "";
-            if (logoURL != null)
-            {
-                logoCode = "<center><img src='"+logoURL+"'></center>";
-            }
-
             editorPane.setText(        
-                    "<html><body>"+logoCode+"<P align=center><b>BNMatch 0.1(December 2009) </b><BR>" +
-                    "<i>The visualizing of biological molecules network</i><BR>" +
-                    "BNMatch finds the most similar target network in the large <BR>" +
-                    "biological molecules network in some search algorithm,<BR>" +
-                    "then visualizing the result network.<BR><BR>"+
+                    "<html><body><P align=center><b>BNMatch 1.0(January 2010) </b><BR>"+
+                    "<i>It is designed to search a target network in an original</i><BR>"+
+                    "network according to the given homologous tables and then<BR>"+
+                    "vividly displays the two network graphs in canvas<BR><BR>"+
                     "</P></body></html>");
             setContentPane(editorPane);
         }

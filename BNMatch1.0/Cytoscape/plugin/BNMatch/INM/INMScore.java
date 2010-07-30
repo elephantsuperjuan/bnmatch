@@ -130,11 +130,11 @@ public class INMScore
          {
            try
              {
-               String s = file.getBufferedReader().readLine().toUpperCase();
+               String s = file.getBufferedReader().readLine();
                while (s != null)
                  {
-                   String[] textLine = s.split("\\s");
-                   
+                   s=s.toUpperCase();
+                   String[] textLine = s.split("\\s");                  
                    firstNode=textLine[0];
                    edgeType=textLine[1];
                    secondNode=textLine[2];
@@ -148,7 +148,7 @@ public class INMScore
                    {
                        yeastNet.AddNewEdge(firstNode, secondNode);
                    }
-                   s=file.getBufferedReader().readLine().toUpperCase();
+                   s=file.getBufferedReader().readLine();
                  }
                file.Close();
                System.out.println(fileName+" has been read successfully!");

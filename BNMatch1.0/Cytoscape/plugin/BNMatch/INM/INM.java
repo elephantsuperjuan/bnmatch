@@ -25,10 +25,11 @@ public class INM
         try
           {
             in = new BufferedReader(new FileReader(Config.getMipsFileName()));//config.ini
-            String s=in.readLine().toUpperCase();
+            String s=in.readLine();
             String temp=null;
             while(s!=null)
             {
+                s=s.toUpperCase();
                 String[] strArray=s.split("\\s+");
                 if(strArray.length!=0)
                 {
@@ -45,7 +46,7 @@ public class INM
                     temp=temp.substring(0,temp.lastIndexOf("."));
                     hs.add(temp);
                 }
-                s=in.readLine().toUpperCase();
+                s=in.readLine();
             }
             
             
