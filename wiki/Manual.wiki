@@ -32,7 +32,7 @@ Secondly, input the necessary files that algorithm needs.
 
 “Proteins assigned to match file” contains the nodes which are 100% matched.
 
-Example: in TestFiels--algorithmfile1 folder
+Example: in TestFiels->algorithmfile1 folder
 
 “Proteins”:MIPS-PC-cc.txt
 
