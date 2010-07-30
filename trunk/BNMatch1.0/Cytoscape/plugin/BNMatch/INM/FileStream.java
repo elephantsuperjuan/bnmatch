@@ -110,10 +110,10 @@ public class FileStream
     {
         try
           {
-            String s = getBufferedReader().readLine().toUpperCase();
+            String s = getBufferedReader().readLine();
             if(s==null)//end of file
                 return false;
-            
+            s=s.toUpperCase();
             String[] textLine = s.split("\\s");
             String a = null;
             double probability = 0.0f;
@@ -157,14 +157,14 @@ public class FileStream
         INMEdge edge=null;
         try
         {
-            String s=getBufferedReader().readLine().toUpperCase();
+            String s=getBufferedReader().readLine();
             if(s==null)
                 return null;
-            
+            s=s.toUpperCase();
             String[] textLine=s.split("\\s");
             
-            firstNode=textLine[0].toUpperCase();
-            secondNode=textLine[1].toUpperCase();
+            firstNode=textLine[0];
+            secondNode=textLine[1];
             probability=Double.valueOf(textLine[2]);
             edge=new INMEdge(firstNode,secondNode,probability);
             return edge;

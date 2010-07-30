@@ -111,9 +111,10 @@ public class INMAlgorithm
         {
             try
               {
-                String s = fs.in.readLine().toUpperCase();
+                String s = fs.in.readLine();
                 if(s!=null)//first line
                 {
+                    s=s.toUpperCase();
                     temp=s.split("\\s");
                     layer=a=temp[0];
                     b=temp[1];
@@ -130,9 +131,10 @@ public class INMAlgorithm
                         subPosition.add(new Integer(-1));//the first node is set to -1
                     }
                 }
-                s=fs.in.readLine().toUpperCase();
+                s=fs.in.readLine();
                 while(s!=null)
                 {
+                    s=s.toUpperCase();
                     temp=s.split("\\s");
                     layer=a=temp[0];
                     b=temp[1];
@@ -148,7 +150,7 @@ public class INMAlgorithm
                         originalSubnet.add(n);
                         subPosition.add(new Integer(0));
                     }
-                   s=fs.in.readLine().toUpperCase(); 
+                   s=fs.in.readLine(); 
                 }
                 
                 if(subPosition.size()>0)
@@ -1216,14 +1218,14 @@ public class INMAlgorithm
         {
             try
               {
-                String s = file.getBufferedReader().readLine().toUpperCase();
+                String s = file.getBufferedReader().readLine();
                 while(s!=null)
                 {
-                    String[] textLine = s.split("\\s");
-                    
-                    KNDs.AddNewEdge(textLine[0].toUpperCase(), textLine[1].toUpperCase(),0, 
+                    s=s.toUpperCase();
+                    String[] textLine = s.split("\\s");                    
+                    KNDs.AddNewEdge(textLine[0], textLine[1],0, 
                             INMEdge.enumEdgeType.DIRECTION);
-                    s = file.getBufferedReader().readLine().toUpperCase();
+                    s = file.getBufferedReader().readLine();
                 }
                 
               } catch (FileNotFoundException e)
