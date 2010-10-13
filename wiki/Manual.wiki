@@ -36,9 +36,9 @@ Example:TestFiles->algorithmfiles->algorithmfile1 folder
 
 “Proteins”:MIPS-PC-cc.txt
 
-“Interactions of one species”：fly.intr.txt
+“Interactions of one species”：yeast.intr.txt 
 
-“Interactions of another species”：yeast.intr.txt
+“Interactions of another species”：fly.intr.txt
 
 “Homologous file”：table.SC-DM.txt
 
