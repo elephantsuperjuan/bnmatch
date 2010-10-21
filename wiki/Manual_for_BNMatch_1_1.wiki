@@ -7,9 +7,44 @@ Download BNMatch1.0.rar and extract it,then place BNMatch.jar in the directory o
 = Usage =
 
 = External sif file =
-It means importing existing sif file from Cytoscape.
+It means importing existing sif file from disk.
 
-First of all, import sif file through “File->import->Network(Mutiple File Type)”.
+"Network1":network of species one,such as：
+AA p2 NN
+AA p2 QQ
+AA p2 ZZ
+BB p2 DD
+BB p2 HH
+BB p2 JJ
+BB p2 QQ
+DD p2 OO
+DD p2 WW
+
+"Network2":network of species two，such as:
+A p1 B
+A p1 C
+A p1 D
+B p1 D
+B p1 G
+B p1 I
+C p1 F
+C p1 G
+D p1 E
+D p1 F
+E p1 I
+G p1 H
+I p1 J
+I p1 K
+I p1 L
+
+"Matched file":nodes containing matched information, such as：
+-A pd -QQ
+-B pd -ZZ
+-C pd -BB
+-D pd -AA
+-E pd -NN
+-F pd -HH
+-G pd -JJ 
 
 Then, press “Analyze” button to generate networks.
 
