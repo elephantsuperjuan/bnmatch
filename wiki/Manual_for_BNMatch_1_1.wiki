@@ -17,6 +17,7 @@ AA p2 QQ
 AA p2 ZZ
 
 BB p2 DD
+
 ...
 
 "Network2":network of species two，such as:
