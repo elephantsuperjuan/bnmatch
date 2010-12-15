@@ -1,6 +1,6 @@
 = Installation =
 
-Download BNMatch1.0.rar and extract it,then place BNMatch.jar in the directory of plugin of Cytoscape 
+Download BNMatch1.1.rar and extract it,then place BNMatch.jar in the directory of plugin of Cytoscape 
 
 
 
