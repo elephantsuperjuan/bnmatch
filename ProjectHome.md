@@ -1,0 +1,1 @@
+BNMatch, full name is bioinformatics network match, is a Cytoscape plugin which is designed to search a target network in an original network according to the given homologous tables and then vividly displays the two network graphs in canvas
